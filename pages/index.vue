@@ -51,7 +51,7 @@
           @click:append-inner="visible = !visible"
         ></v-text-field>
 
-        <v-btn class="bg-primary text-body-2 mt-5" type="submit">Log In</v-btn>
+        <v-btn class="bg-primary text-body-2 mt-5" type="submit">Sign In</v-btn>
       </v-form>
     </v-sheet>
 
@@ -65,13 +65,14 @@
       Continue with Google
     </v-btn>
 
-    <div class="d-flex flex-column ga-5 mt-10">
+    <div class="d-flex flex-column ga-5 mt-10 align-self-start">
       <p class="font-weight-bold text-body-2">Forgot Password?</p>
 
       <div class="text-body-2 d-flex ga-1">
         <p>Don't have an account?</p>
+          <NuxtLink to="/register" class="font-weight-bold" >Create account</NuxtLink>
 
-        <p class="font-weight-bold">Create account</p>
+        
       </div>
     </div>
   </div>

@@ -1,32 +1,11 @@
 <template>
   <div class="d-flex flex-column align-center mx-13 justify-center">
-    <div class="d-flex flex-column align-center justify-center mb-5">
-      <h1 class="text-h3 text-center mb-5">Work Essentials</h1>
-
-      <div class="d-flex flex-column">
-        <div class="d-flex justify-center">
-          <Icon
-            name="material-symbols:calendar-month-outline-sharp"
-            size="28"
-          />
-        </div>
-
-        <div class="d-flex ga-10 justify-center">
-          <Icon name="material-symbols:qr-code-scanner" size="28" />
-
-          <Icon name="material-symbols:barcode-scanner" size="28" />
-        </div>
-
-        <div class="d-flex justify-center">
-          <Icon
-            name="material-symbols:barcode-reader-outline-sharp"
-            size="28"
-          />
-        </div>
-      </div>
+    <div class="d-flex flex-column align-center mb-5 justify-center">
+      <h1 class="text-h3 mb-5 text-center">Work Essentials</h1>
+      <Logo size="28" />
     </div>
 
-    <v-sheet class="w-100 mx-auto mt-2">
+    <v-sheet class="mx-auto mt-2" width="280">
       <v-form @submit="onSubmit" @submit.prevent class="d-flex flex-column">
         <v-text-field
           class="text-black"
@@ -65,14 +44,14 @@
       Continue with Google
     </v-btn>
 
-    <div class="d-flex flex-column ga-5 mt-10 align-self-start">
+    <div class="d-flex flex-column ga-5 align-self-start mt-10">
       <p class="font-weight-bold text-body-2">Forgot Password?</p>
 
       <div class="text-body-2 d-flex ga-1">
         <p>Don't have an account?</p>
-          <NuxtLink to="/register" class="font-weight-bold" >Create account</NuxtLink>
-
-        
+        <NuxtLink to="/register" class="font-weight-bold"
+          >Create account</NuxtLink
+        >
       </div>
     </div>
   </div>

@@ -1,72 +1,98 @@
 <template>
-  <div class="d-flex flex-column align-center justify-center border">
-    <div class="d-flex align-center ga-16 justify-center">
-      <div class="d-flex flex-column align-start">
-        <h1 class="text-center">Work</h1>
-        <h1 class="text-center">Essentials</h1>
-      </div>
-
-      <div class="d-flex flex-column">
-        <div class="d-flex justify-center">
-          <Icon
-            name="material-symbols:calendar-month-outline-sharp"
-            size="28"
-          />
-        </div>
-
-        <div class="d-flex ga-10 justify-center">
-          <Icon name="material-symbols:qr-code-scanner" size="28" />
-
-          <Icon name="material-symbols:barcode-scanner" size="28" />
-        </div>
-
-        <div class="d-flex justify-center">
-          <Icon
-            name="material-symbols:barcode-reader-outline-sharp"
-            size="28"
-          />
-        </div>
-      </div>
+  <div class="d-flex flex-column align-center mx-13 justify-center">
+    <div class="d-flex align-center mb-2 justify-center">
+      <h1 class="text-h4">Create Account</h1>
     </div>
-    <h2 class="align-self-start mt-5">Register</h2>
-    <v-stepper :items="['Step 1', 'Step 2', 'Step 3']">
-      <template v-slot:item.1>
-        <v-card title="Step One" flat>...</v-card>
-      </template>
 
-      <template v-slot:item.2>
-        <v-card title="Step Two" flat>...</v-card>
-      </template>
+    <v-sheet class="mx-auto mt-2" width="280">
+      <form @submit.prevent="submit" class="d-flex flex-column ga-3">
+        <v-text-field
+          class="text-black"
+          density="comfortable"
+          prepend-inner-icon="mdi-account-outline"
+          color="primary"
+          v-model="displayName.value.value"
+          :error-messages="displayName.errorMessage.value"
+          label="Display Name"
+          variant="underlined"
+        ></v-text-field>
 
-      <template v-slot:item.3>
-        <v-card title="Step Three" flat>...</v-card>
-      </template>
-    </v-stepper>
-    <div class="text-body-2 d-flex ga-1">
-      <p>Already have an account?</p>
-      <NuxtLink to="/" class="font-weight-bold">Sign In</NuxtLink>
+        <v-text-field
+          class="text-black"
+          density="comfortable"
+          prepend-inner-icon="mdi-email-outline"
+          color="primary"
+          v-model="email.value.value"
+          :error-messages="email.errorMessage.value"
+          label="Email"
+          variant="underlined"
+        ></v-text-field>
+
+        <v-text-field
+          class="text-black"
+          density="comfortable"
+          prepend-inner-icon="mdi-lock-outline"
+          type="password"
+          color="primary"
+          v-model="password.value.value"
+          :error-messages="password.errorMessage.value"
+          label="Password"
+          variant="underlined"
+        ></v-text-field>
+
+        <v-text-field
+          class="text-black"
+          density="comfortable"
+          prepend-inner-icon="mdi-lock-outline"
+          type="password"
+          color="primary"
+          v-model="confirmPassword.value.value"
+          :error-messages="confirmPassword.errorMessage.value"
+          label="Confirm Password"
+          variant="underlined"
+        ></v-text-field>
+
+        <v-btn class="bg-primary text-body-2 mt-5" type="submit"
+          >Create account</v-btn
+        >
+      </form>
+    </v-sheet>
+
+    <div class="my-3">
+      <h5>OR</h5>
+    </div>
+
+    <v-btn class="text-body-2 w-100">
+      <Icon name="logos:google-icon" class="mr-3" />
+
+      Sign up with Google
+    </v-btn>
+
+    <div class="d-flex flex-column ga-5 align-self-start mt-10">
+      <p class="font-weight-bold text-body-2">Forgot Password?</p>
+
+      <div class="text-body-2 d-flex ga-1">
+        <p>Already have an account?</p>
+        <NuxtLink to="/" class="font-weight-bold">Sign In</NuxtLink>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-  import Swal from 'sweetalert2'
+  // import Swal from 'sweetalert2'
+  import { useField, useForm } from 'vee-validate'
 
-  const visible = ref(false)
+  const { handleSubmit } = useForm({
+    validationSchema: CreateAccountSchema,
+  })
 
-  const email = ref('')
+  const displayName = useField('displayName')
+  const email = useField('email')
+  const password = useField('password')
+  const confirmPassword = useField('confirmPassword')
 
-  const password = ref('')
-
-  const onSubmit = (values) => {
-    // display form values on success
-
-    Swal.fire({
-      title: 'Success !!!',
-
-      text: `Email: ${email.value} Password: ${password.value}`,
-
-      icon: 'success',
-    })
-  }
+  const submit = handleSubmit((values) => {
+    alert(JSON.stringify(values, null, 2))
+  })
 </script>

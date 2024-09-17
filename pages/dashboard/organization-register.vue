@@ -25,26 +25,32 @@
           <p>
             Please read and accept the Terms & Conditions and Privacy Policy.
           </p>
-          <v-overlay persistent scroll-strategy="block" v-model="termsAndConditionsOverlay"
-          class="justify-center align-center"
+          <v-overlay
+            persistent
+            scroll-strategy="block"
+            v-model="appStore.termsAndConditionsOverlay"
+            class="align-center justify-center"
             ><TermsAndConditions
           /></v-overlay>
-
-          <v-btn
-            @click="termsAndConditionsOverlay = !termsAndConditionsOverlay"
-            color="primary"
-            >Terms & Conditions</v-btn
-          >
-          <v-btn color="primary">Privacy Policy</v-btn>
-
           <v-form ref="form">
             <v-checkbox
-              v-model="checkbox"
-              :rules="[(v) => !!v || 'You must agree to continue!']"
-              label="Do you agree?"
-              required
-            ></v-checkbox>
+              :disabled="!appStore.acceptTermsAndConditions && !Error"
+              :rules="[(v) => !!v || 'You must agree to the Terms & !']"
+              color="success"
+              v-model="appStore.acceptTermsAndConditions"
+              ><template v-slot:label>
+                <v-btn
+                  class="active-btn"
+                  variant="plain"
+                  @click="appStore.termsAndConditionsOverlay = true"
+                  :color="appStore.acceptTermsAndConditions ? 'green' : null"
+                  >Terms & Conditions</v-btn
+                ></template
+              >
+            </v-checkbox>
           </v-form>
+
+          <v-btn color="primary">Privacy Policy</v-btn>
           <v-btn prepend-icon="mdi-arrow-left" @click="step--" color="primary"
             >Previous</v-btn
           >
@@ -69,15 +75,13 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
-
+  import { useAppStore } from '~/stores/appStore'
   definePageMeta({
     layout: 'auth-layout',
   })
 
   const step = ref(1) // Current step in the stepper
-  const checkbox = ref(false) // Checkbox status
-  const termsAndConditionsOverlay = ref(false)
+  const appStore = useAppStore()
 
   // Function to move to the next step
   const nextStep = () => {
@@ -88,3 +92,10 @@
     step.value++
   }
 </script>
+
+<style scoped>
+  /* Ensure the button remains active even when the checkbox is disabled */
+  .active-btn {
+    pointer-events: auto;
+  }
+</style>

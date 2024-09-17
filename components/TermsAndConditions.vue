@@ -47,17 +47,23 @@
       praesentium quasi, quaerat magnam illo.
     </v-card-text>
     <v-card-actions class="d-flex justify-end">
-      <v-btn :disabled="offSetTop < 575" variant="plain">I accept</v-btn>
+      <v-btn @click="haveReadandAccept" :disabled="offSetTop < 575" variant="plain">I accept</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script setup>
+  import { useAppStore } from '~/stores/appStore'
+
+  const appStore = useAppStore()
   const offSetTop = ref(0)
-  const read = ref(false)
+
+  const haveReadandAccept = () => {
+    appStore.termsAndConditionsOverlay = false
+    appStore.acceptTermsAndConditions = true
+  }
 
   const onScroll = (e) => {
     offSetTop.value = e.target.scrollTop
   }
-  
 </script>

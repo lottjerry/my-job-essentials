@@ -32,9 +32,16 @@
             class="align-center justify-center"
             ><TermsAndConditions
           /></v-overlay>
+          <v-overlay
+            persistent
+            scroll-strategy="block"
+            v-model="appStore.privacyPolicyOverlay"
+            class="align-center justify-center"
+            ><PrivacyPolicy
+          /></v-overlay>
           <v-form ref="form">
             <v-checkbox
-              :disabled="!appStore.acceptTermsAndConditions && !Error"
+              :disabled="disableTermsAndConditions"
               :rules="[(v) => !!v || 'You must agree to the Terms & !']"
               color="success"
               v-model="appStore.acceptTermsAndConditions"
@@ -42,16 +49,30 @@
                 <v-btn
                   class="active-btn"
                   variant="plain"
-                  @click="appStore.termsAndConditionsOverlay = true"
+                  @click="appStore.termsAndConditionsOverlay = true; disableTermsAndConditions = false"
                   :color="appStore.acceptTermsAndConditions ? 'green' : null"
                   >Terms & Conditions</v-btn
                 ></template
               >
             </v-checkbox>
+            <v-checkbox
+            :disabled="disablePrivacyPolicy"
+              :rules="[(v) => !!v || 'You must agree to the Terms & !']"
+              color="success"
+              v-model="appStore.acceptPrivacyPolicy"
+              ><template v-slot:label>
+                <v-btn
+                  class="active-btn"
+                  variant="plain"
+                  @click="appStore.privacyPolicyOverlay = true; disablePrivacyPolicy = false"
+                  :color="appStore.acceptPrivacyPolicy ? 'green' : null"
+                  >Privacy Policy</v-btn
+                ></template
+              >
+            </v-checkbox>
           </v-form>
 
-          <v-btn color="primary">Privacy Policy</v-btn>
-          <v-btn prepend-icon="mdi-arrow-left" @click="step--" color="primary"
+          <v-btn prepend-icon="mdi-arrow-left" @click="step--; resetlegal()" color="primary"
             >Previous</v-btn
           >
           <v-btn
@@ -82,14 +103,13 @@
 
   const step = ref(1) // Current step in the stepper
   const appStore = useAppStore()
+  const disableTermsAndConditions = ref(true)
+  const disablePrivacyPolicy = ref(true)
+ 
+  const resetlegal = () => {
 
-  // Function to move to the next step
-  const nextStep = () => {
-    if (step.value === 1 && !checkbox.value) {
-      return // Prevent moving to the next step if checkbox is not checked
-    }
-
-    step.value++
+    appStore.acceptPrivacyPolicy = false
+    appStore.acceptTermsAndConditions = false
   }
 </script>
 

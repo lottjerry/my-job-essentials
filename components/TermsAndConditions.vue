@@ -47,7 +47,13 @@
       praesentium quasi, quaerat magnam illo.
     </v-card-text>
     <v-card-actions class="d-flex justify-end">
-      <v-btn @click="haveReadandAccept" :disabled="offSetTop < 575" variant="plain">I accept</v-btn>
+      <v-btn
+        @click="haveReadandAccept"
+        :disabled="offSetTop < 575"
+        color="primary"
+        variant="plain"
+        >I accept</v-btn
+      >
     </v-card-actions>
   </v-card>
 </template>

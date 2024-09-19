@@ -5,7 +5,7 @@
       <Logo size="28" />
     </div>
 
-    <v-sheet class="mx-auto mt-2" width="280">
+   <v-sheet eet class="mx-auto mt-2" width="280">
       <v-form @submit="onSubmit" @submit.prevent class="d-flex flex-column">
         <v-text-field
           class="text-black"

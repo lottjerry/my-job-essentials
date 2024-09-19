@@ -51,6 +51,7 @@
         @click="haveReadandAccept"
         :disabled="offSetTop < 575"
         variant="plain"
+        color="primary"
         >I accept</v-btn
       >
     </v-card-actions>

@@ -20,7 +20,7 @@
       <v-navigation-drawer
         v-model="drawer"
         :location="$vuetify.display.mobile ? 'bottom' : 'right'"
-        :width="$vuetify.display.mobile ? undefined: '350'"
+        :width="$vuetify.display.mobile ? undefined : '350'"
       >
         <v-list>
           <v-list-item
@@ -51,11 +51,11 @@
           ></v-list-item>
         </v-list>
       </v-navigation-drawer>
+      <div>
+        <slot />
+      </div>
     </v-layout>
   </v-card>
-  <div>
-    <slot />
-  </div>
 </template>
 
 <script>

@@ -35,17 +35,22 @@
         <v-list>
           <v-list-item
             prepend-icon="mdi-calendar-month"
+            color="primary"
             title="
             Schedule"
             value="myfiles"
+            to="/dashboard/organization-register"
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-account"
-            title="My Profile"
+            color="primary"
+            title="My Account"
             value="shared"
+            to="/dashboard/my-account"
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-exit-to-app"
+            color="primary"
             title="Sign Out"
             value="starred"
           ></v-list-item>

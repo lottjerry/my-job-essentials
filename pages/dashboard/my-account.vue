@@ -51,7 +51,7 @@
           <p class="text-h5">Display Name</p>
 
           <v-btn
-            @click="displayNameOverlay = !displayNameOverlay"
+            @click="toggleDisplayNameOverlay"
             density="compact"
             variant="text"
             class="text-h6"
@@ -92,7 +92,9 @@
 
           <v-container>
             <v-confirm-edit v-model="displayName" color="primary">
-              <template v-slot:default="{ model: proxyModel, actions }">
+              <template
+                v-slot:default="{ model: proxyModel, save, cancel, isPristine }"
+              >
                 <v-card
                   title="Edit Display Name"
                   width="300"
@@ -109,11 +111,31 @@
                     ></v-text-field>
                   </template>
 
-                  <template v-slot:actions>
-                    <v-spacer></v-spacer>
-
-                    <component :is="actions"></component>
-                  </template>
+                  <div class="d-flex ma-3 justify-end">
+                    <v-btn
+                      color="error"
+                      variant="plain"
+                      @click="
+                        () => {
+                          cancel()
+                          toggleDisplayNameOverlay()
+                        }
+                      "
+                      >Cancel</v-btn
+                    >
+                    <v-btn
+                      :color="!isPristine ? 'primary' : 'gray'"
+                      :disabled="isPristine"
+                      variant="plain"
+                      @click="
+                        () => {
+                          save()
+                          toggleDisplayNameOverlay()
+                        }
+                      "
+                      >Ok</v-btn
+                    >
+                  </div>
                 </v-card>
               </template>
             </v-confirm-edit>
@@ -139,4 +161,8 @@
   const displayName = shallowRef('Sandy')
 
   const displayNameOverlay = ref(false)
+
+  const toggleDisplayNameOverlay = () => {
+    displayNameOverlay.value = !displayNameOverlay.value
+  }
 </script>

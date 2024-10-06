@@ -33,12 +33,7 @@
         <!-- Profile Picture -->
 
         <div class="d-flex align-center pa-2 justify-center">
-          <v-avatar
-            class="border-primary border-lg border"
-            icon="$vuetify"
-            image="https://randomuser.me/api/portraits/women/10.jpg"
-            size="100"
-          ></v-avatar>
+          <v-icon icon="mdi-account" size="75"></v-icon>
         </div>
 
         <!-- Profile End -->

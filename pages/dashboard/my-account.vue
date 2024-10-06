@@ -91,11 +91,17 @@
           <!-- Display Name Overlay Content Begin-->
 
           <v-container>
-            <v-confirm-edit v-model="displayName">
+            <v-confirm-edit v-model="displayName" color="primary">
               <template v-slot:default="{ model: proxyModel, actions }">
-                <v-card title="Edit Display Name" width="300">
+                <v-card
+                  title="Edit Display Name"
+                  width="300"
+                  class="d-flex flex-column"
+                >
                   <template v-slot:text>
                     <v-text-field
+                      base-color="primary"
+                      color="primary"
                       class="mt-3"
                       v-model="proxyModel.value"
                       variant="outlined"
@@ -129,7 +135,6 @@
   definePageMeta({
     layout: 'auth-layout',
   })
-
 
   const displayName = shallowRef('Sandy')
 

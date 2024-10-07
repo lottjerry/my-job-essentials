@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container>
+    <v-container class="h-screen mt-10">
       <v-card variant="outlined" height="500" width="350">
         <div class="d-flex pa-5 ga-5 bg-primary">
           <!-- Logo Begin -->
@@ -32,7 +32,7 @@
 
         <!-- Profile Picture -->
 
-        <div class="d-flex align-center pa-2 justify-center">
+        <div class="d-flex align-center pa-2 justify-center ma-2">
           <v-icon icon="mdi-account" size="75"></v-icon>
         </div>
 
@@ -81,6 +81,7 @@
         <v-overlay
           v-model="displayNameOverlay"
           class="align-center justify-center"
+          persistent
           contained
         >
           <!-- Display Name Overlay Content Begin-->

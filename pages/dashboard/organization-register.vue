@@ -2,7 +2,7 @@
   <div class="h-screen">
     <v-stepper v-model="step" hide-actions class="h-75 mx-3 mt-10">
       <!-- V Stepper Header Start -->
-      <v-stepper-header>
+    <v-stepper-header>
         <v-stepper-item
           :value="1"
           subtitle="Start"

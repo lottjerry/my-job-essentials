@@ -20,7 +20,7 @@
         <v-stepper-item
           :value="2"
           subtitle="Legal"
-          selected-class="text-primary"
+          :selected-class="(!disablePrivacyPolicy && !appStore.acceptPrivacyPolicy) || (!disableTermsAndConditions && !appStore.acceptTermsAndConditions) ? 'text-error' : 'text-primary'"
           :class="step > 2 ? 'text-success' : null"
           :color="step === 2 ? 'primary' : step > 2 ? 'success' : null"
           icon="mdi-scale-balance"

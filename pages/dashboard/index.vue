@@ -1,7 +1,7 @@
 <template>
   <v-container class="d-flex h-screen">
-    <v-card variant="flat" height="500" width="350">
-      <v-stepper class="mt-12" v-model="step" non-linear flat hide-actions>
+    <v-card variant="flat" width="350">
+      <v-stepper v-model="step" non-linear flat hide-actions>
         <!-- V Stepper Header Start -->
         <v-stepper-header>
           <v-stepper-item
@@ -43,17 +43,57 @@
           </v-stepper-item>
         </v-stepper-header>
         <!-- V Stepper Header End -->
-         <!-- ************************************************************ -->
+        <!-- ************************************************************ -->
         <!-- V Stepper Window Start -->
         <v-stepper-window>
           <!-- Step 1 -->
           <v-stepper-window-item :value="1">
-            <v-card title="Previous" flat class="d-flex flex-column ga-5">
-              <p>
-                In order to view your schedule, you will have to register with
-                your organization. This information can be obtained from your
-                office personal.
-              </p>
+            <v-card
+              prepend-icon="$vuetify"
+              subtitle="The #1 Vue UI Library"
+              class="bg-primary rounded-lg"
+            >
+              <template v-slot:title>
+                <span class="font-weight-black">Welcome to Vuetify</span>
+              </template>
+              <v-virtual-scroll
+                class="ma-1 pa-1 rounded-lg border bg-white"
+                :height="400"
+                :items="[
+                  '1',
+                  '2',
+                  '3',
+                  '4',
+                  '5',
+                  '6',
+                  '7',
+                  '8',
+                  '9',
+                  '10',
+                  '11',
+                  '12',
+                  '13',
+                  '14',
+                  '15',
+                  '16',
+                  '17',
+                  '18',
+                  '19',
+                  '20',
+                  '21',
+                  '22',
+                  '23',
+                  '24',
+                  '25',
+                  '26',
+                  '27',
+                  '28',
+                  '29',
+                  '30',
+                ]"
+              >
+                <template v-slot:default="{ item }"> Item {{ item }} </template>
+              </v-virtual-scroll>
             </v-card>
           </v-stepper-window-item>
           <!-- Step 2 -->
@@ -88,4 +128,22 @@
   })
 
   const step = ref(2)
+
+  const schedule = {
+    Sunday: {
+      day: 'Sunday',
+      position: 'Cashier',
+      date: Date,
+    },
+    Monday: {
+      day: 'Monday',
+      position: 'Cashier',
+      date: Date,
+    },
+    Tuesday: {
+    day: "Tuesday",
+    position: "Cashier",
+    date: Date 
+  },
+  }
 </script>

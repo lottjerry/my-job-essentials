@@ -24,7 +24,7 @@
       >
         <v-list>
           <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+            prepend-icon="mdi-account-circle"
             subtitle="jijfjifjeijfeifjifjeifje@gmail.com"
             title="Sandra Adams"
           ></v-list-item>
@@ -37,22 +37,21 @@
             prepend-icon="mdi-calendar-month"
             color="primary"
             title="
+            My
             Schedule"
-            value="myfiles"
             to="/dashboard/organization-register"
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-account"
             color="primary"
             title="My Account"
-            value="shared"
             to="/dashboard/my-account"
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-exit-to-app"
             color="primary"
             title="Sign Out"
-            value="starred"
+            to="/dashboard"
           ></v-list-item>
         </v-list>
       </v-navigation-drawer>

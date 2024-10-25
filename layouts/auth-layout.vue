@@ -25,8 +25,8 @@
         <v-list>
           <v-list-item
             prepend-icon="mdi-account-circle"
-            subtitle="jijfjifjeijfeifjifjeifje@gmail.com"
-            title="Sandra Adams"
+            :subtitle=user.email
+            :title=user.displayName
           ></v-list-item>
         </v-list>
 
@@ -67,6 +67,7 @@
     setup() {
       const drawer = ref(false)
       const group = ref(null)
+      const user = useCurrentUser()
 
       watch(group, () => {
         drawer.value = false
@@ -75,6 +76,7 @@
       return {
         drawer,
         group,
+        user,
       }
     },
   }

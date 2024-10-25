@@ -62,7 +62,7 @@
       <h5>OR</h5>
     </div>
 
-    <v-btn class="text-body-2 w-100">
+    <v-btn @click="signUpWithGoogle" class="text-body-2 w-100">
       <Icon name="logos:google-icon" class="mr-3" />
 
       Sign up with Google
@@ -82,6 +82,13 @@
 <script setup>
   // import Swal from 'sweetalert2'
   import { useField, useForm } from 'vee-validate'
+  import {
+    createUserWithEmailAndPassword,
+    updateProfile,
+    signInWithPopup,
+  } from 'firebase/auth'
+  import { GoogleAuthProvider } from 'firebase/auth'
+  import Swal from 'sweetalert2'
 
   const { handleSubmit } = useForm({
     validationSchema: CreateAccountSchema,
@@ -91,8 +98,80 @@
   const email = useField('email')
   const password = useField('password')
   const confirmPassword = useField('confirmPassword')
+  const googleAuthProvider = new GoogleAuthProvider()
 
-  const submit = handleSubmit((values) => {
-    alert(JSON.stringify(values, null, 2))
+  const auth = useFirebaseAuth()
+
+  const submit = handleSubmit(async (values) => {
+    try {
+      // Show loading alert
+      Swal.fire({
+        title: 'Creating Account...',
+        text: 'Please wait while we create your account',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading()
+        },
+      })
+
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password,
+      )
+      await updateProfile(user, { displayName: values.displayName })
+
+      // Show success message
+      Swal.fire({
+        icon: 'success',
+        title: 'Account Created!',
+        text: 'Your account was successfully created.',
+        timer: 2500,
+        showConfirmButton: false,
+      }).then(() => {
+        // Close the SweetAlert and redirect user
+        navigateTo('/dashboard', { replace: true })
+      })
+    } catch (error) {
+      console.log(error.message)
+      Swal.fire({
+        icon: 'error',
+        title: 'Something went wrong!',
+        text: error.message,
+      })
+    }
   })
+
+  const signUpWithGoogle = async () => {
+      // Show loading alert
+      Swal.fire({
+        title: 'Creating Account...',
+        text: 'Please wait while we create your account',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading()
+        },
+      })
+    try {
+      await signInWithPopup(auth, googleAuthProvider)
+      // Show success message
+      Swal.fire({
+        icon: 'success',
+        title: 'Account Created!',
+        text: 'Your account was successfully created.',
+        timer: 2500,
+        showConfirmButton: false,
+      }).then(() => {
+        // Close the SweetAlert and redirect user
+        navigateTo('/dashboard', { replace: true })
+      })
+    } catch (error) {
+      console.log(error.message)
+      Swal.fire({
+        icon: 'error',
+        title: 'Something went wrong!',
+        text: error.message,
+      })
+    }
+  }
 </script>

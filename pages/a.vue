@@ -81,22 +81,30 @@
     return validationMessage === true // Valid if no error message
   })
 
-  // Function to read and convert CSV to JSON
-  const readCSVFile = async (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.onload = async (e) => {
-        const csvData = e.target.result
-        try {
-          const json = await csv().fromString(csvData)
-          resolve(json)
-        } catch (error) {
-          reject(error)
-        }
+// Function to read and convert CSV to JSON, skipping empty columns
+const readCSVFile = async (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = async (e) => {
+      const csvData = e.target.result
+      try {
+        const json = await csv().fromString(csvData)
+
+        // Filter out empty columns from each row
+        const filteredJson = json.map((row) => {
+          return Object.fromEntries(
+            Object.entries(row).filter(([key, value]) => value.trim() !== "")
+          )
+        })
+
+        resolve(filteredJson)
+      } catch (error) {
+        reject(error)
       }
-      reader.readAsText(file)
-    })
-  }
+    }
+    reader.readAsText(file)
+  })
+}
 
   // Main function to handle file upload
   const handleFileUpload = async () => {

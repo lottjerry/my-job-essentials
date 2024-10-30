@@ -39,7 +39,7 @@
         <div>
           <v-card class="pa-10">
             <v-data-table-virtual
-              class="w-auto setMinWidth"
+              class="setMinWidth w-auto"
               :items="appStore.previousSchedule"
               height="500"
             ></v-data-table-virtual>
@@ -70,14 +70,16 @@
               class="bg-primary"
               >Upload Schedule</v-btn
             >
-            <v-btn class="bg-error" @click="deleteCurrentSchedule">Delete Schedule</v-btn>
+            <v-btn class="bg-error" @click="deleteCurrentSchedule"
+              >Delete Schedule</v-btn
+            >
           </div>
         </v-card>
         <h1>Current Week</h1>
         <div>
           <v-card class="pa-10">
             <v-data-table-virtual
-              class="w-auto setMinWidth"
+              class="setMinWidth w-auto"
               :items="appStore.currentSchedule"
               height="500"
             ></v-data-table-virtual>
@@ -108,14 +110,16 @@
               class="bg-primary"
               >Upload Schedule</v-btn
             >
-            <v-btn class="bg-error" @click="deleteNextSchedule">Delete Schedule</v-btn>
+            <v-btn class="bg-error" @click="deleteNextSchedule"
+              >Delete Schedule</v-btn
+            >
           </div>
         </v-card>
         <h1>Next Week</h1>
         <div>
           <v-card class="pa-10">
             <v-data-table-virtual
-              class="w-auto setMinWidth"
+              class="setMinWidth w-auto"
               :items="appStore.nextSchedule"
               height="500"
             ></v-data-table-virtual>
@@ -127,6 +131,10 @@
 </template>
 
 <script setup>
+  definePageMeta({
+    layout: 'auth-layout',
+  })
+
   import { ref, computed } from 'vue'
   import csv from 'csvtojson'
   import { useAppStore } from '~/stores/appStore'
@@ -264,7 +272,7 @@
 </script>
 
 <style>
-.setMinWidth {
-  min-width: 1550px;
-}
+  .setMinWidth {
+    min-width: 1550px;
+  }
 </style>

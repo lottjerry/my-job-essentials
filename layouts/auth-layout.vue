@@ -25,8 +25,8 @@
         <v-list>
           <v-list-item
             prepend-icon="mdi-account-circle"
-            :subtitle=user.email
-            :title=user.displayName
+            :subtitle="user.email"
+            :title="user.displayName"
           ></v-list-item>
         </v-list>
 
@@ -46,6 +46,12 @@
             color="primary"
             title="My Account"
             to="/dashboard/my-account"
+          ></v-list-item>
+          <v-list-item
+            prepend-icon="mdi-calendar-multiple"
+            color="primary"
+            title="Schedules"
+            to="/dashboard/schedules"
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-exit-to-app"

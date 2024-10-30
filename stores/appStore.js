@@ -3,6 +3,10 @@ import { defineStore } from 'pinia'
 export const useAppStore = defineStore('appStore', () => {
   const termsAndConditionsOverlay = ref(false)
   const acceptTermsAndConditions = ref(false)
+  const previousSchedule = ref([])
+  const currentSchedule = ref([])
+  const nextSchedule = ref([])
+
 
 
   const privacyPolicyOverlay = ref(false)
@@ -11,6 +15,9 @@ export const useAppStore = defineStore('appStore', () => {
   return {
     termsAndConditionsOverlay,
     acceptTermsAndConditions,
+    previousSchedule,
+    currentSchedule,
+    nextSchedule,
     privacyPolicyOverlay,
     acceptPrivacyPolicy,
   }

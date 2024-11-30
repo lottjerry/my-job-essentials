@@ -1,12 +1,14 @@
 <template>
-  <div class="d-flex flex-column align-centerjustify-center border pa-5 rounded-xl bg-white w-md-50 w-lg-25 mx-3" >
+  <div
+    class="d-flex flex-column align-centerjustify-center pa-5 w-md-50 w-lg-25 mx-3 rounded-xl border bg-white"
+  >
     <div class="d-flex flex-column align-center mb-5 justify-center">
       <h1 class="text-h3 mb-5 text-center">Work Essentials</h1>
       <Logo size="28" />
     </div>
 
-    <v-sheet eet class="mx-auto mt-2 w-100 w-md-75" >
-      <v-form @submit="onSubmit" @submit.prevent class="d-flex flex-column">
+    <v-sheet eet class="w-100 w-md-75 mx-auto mt-2">
+      <v-form @submit.prevent="submit" class="d-flex flex-column">
         <v-text-field
           class="text-black"
           density="comfortable"
@@ -34,11 +36,14 @@
       </v-form>
     </v-sheet>
 
-    <div class="my-3 align-self-center" >
+    <div class="align-self-center my-3">
       <h5>OR</h5>
     </div>
 
-    <v-btn class="text-body-2 w-100 w-md-75 align-self-center" >
+    <v-btn
+      @click="signInWithGoogle"
+      class="text-body-2 w-100 w-md-75 align-self-center"
+    >
       <Icon name="logos:google-icon" class="mr-3" />
 
       Continue with Google
@@ -59,22 +64,83 @@
 
 <script setup>
   import Swal from 'sweetalert2'
+  import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
+  import { GoogleAuthProvider } from 'firebase/auth'
+
+  const googleAuthProvider = new GoogleAuthProvider()
+  const auth = useFirebaseAuth()
 
   const visible = ref(false)
-
   const email = ref('')
-
   const password = ref('')
 
-  const onSubmit = (values) => {
-    // display form values on success
+  // Sign in with email and password
+  const submit = async () => {
+    try {
+      // Show loading alert
+      Swal.fire({
+        title: 'We are signing you in...',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading()
+        },
+      })
 
+      const { user } = await signInWithEmailAndPassword(
+        auth,
+        email.value,
+        password.value,
+      )
+
+      // Show success message
+      Swal.fire({
+        icon: 'success',
+        title: 'Signed in successfully!',
+        timer: 1500,
+        showConfirmButton: false,
+      }).then(() => {
+        // Close the SweetAlert and redirect user
+        navigateTo('/dashboard', { replace: true })
+      })
+    } catch (error) {
+      console.log(error.message)
+      Swal.fire({
+        icon: 'error',
+        title: 'Something went wrong!',
+        text: error.message,
+      })
+    }
+  }
+
+  // Sign In With Google
+  const signInWithGoogle = async () => {
+    // Show loading alert
     Swal.fire({
-      title: 'Success !!!',
-
-      text: `Email: ${email.value} Password: ${password.value}`,
-
-      icon: 'success',
+      title: 'We are signing you in...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading()
+      },
     })
+    try {
+      await signInWithPopup(auth, googleAuthProvider)
+      // Show success message
+      Swal.fire({
+        icon: 'success',
+        title: 'Signed in successfully!',
+        timer: 1500,
+        showConfirmButton: false,
+      }).then(() => {
+        // Close the SweetAlert and redirect user
+        navigateTo('/dashboard', { replace: true })
+      })
+    } catch (error) {
+      console.log(error.message)
+      Swal.fire({
+        icon: 'error',
+        title: 'Something went wrong!',
+        text: error.message,
+      })
+    }
   }
 </script>

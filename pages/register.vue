@@ -102,6 +102,7 @@
 
   const auth = useFirebaseAuth()
 
+  // Sign up with email and password
   const submit = handleSubmit(async (values) => {
     try {
       // Show loading alert
@@ -142,6 +143,7 @@
     }
   })
 
+  // Sign up with Google
   const signUpWithGoogle = async () => {
       // Show loading alert
       Swal.fire({

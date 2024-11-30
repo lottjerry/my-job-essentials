@@ -1,10 +1,10 @@
 <template>
-  <div class="d-flex flex-column align-center mx-13 justify-center">
+  <div class="d-flex flex-column align-center justify-center border pa-5 rounded-xl bg-white w-md-50 w-lg-25 w-100 mx-3" >
     <div class="d-flex align-center mb-2 justify-center">
       <h1 class="text-h4">Create Account</h1>
     </div>
 
-    <v-sheet class="mx-auto mt-2" width="280">
+    <v-sheet class="mx-auto mt-2 w-100 w-md-75">
       <form @submit.prevent="submit" class="d-flex flex-column ga-3">
         <v-text-field
           class="text-black"
@@ -62,7 +62,7 @@
       <h5>OR</h5>
     </div>
 
-    <v-btn @click="signUpWithGoogle" class="text-body-2 w-100">
+    <v-btn @click="signUpWithGoogle" class="text-body-2 w-100 w-md-75 align-self-center" >
       <Icon name="logos:google-icon" class="mr-3" />
 
       Sign up with Google

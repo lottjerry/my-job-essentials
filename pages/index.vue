@@ -1,11 +1,11 @@
 <template>
-  <div class="d-flex flex-column align-center mx-13 justify-center">
+  <div class="d-flex flex-column align-centerjustify-center border pa-5 rounded-xl bg-white w-md-50 w-lg-25 mx-3" >
     <div class="d-flex flex-column align-center mb-5 justify-center">
       <h1 class="text-h3 mb-5 text-center">Work Essentials</h1>
       <Logo size="28" />
     </div>
 
-    <v-sheet eet class="mx-auto mt-2" width="280">
+    <v-sheet eet class="mx-auto mt-2 w-100 w-md-75" >
       <v-form @submit="onSubmit" @submit.prevent class="d-flex flex-column">
         <v-text-field
           class="text-black"
@@ -34,11 +34,11 @@
       </v-form>
     </v-sheet>
 
-    <div class="my-3">
+    <div class="my-3 align-self-center" >
       <h5>OR</h5>
     </div>
 
-    <v-btn class="text-body-2 w-100">
+    <v-btn class="text-body-2 w-100 w-md-75 align-self-center" >
       <Icon name="logos:google-icon" class="mr-3" />
 
       Continue with Google

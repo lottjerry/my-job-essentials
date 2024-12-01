@@ -1,10 +1,12 @@
 <template>
-  <div class="d-flex flex-column align-center justify-center border pa-5 rounded-xl bg-white w-md-50 w-lg-25 w-100 mx-3" >
+  <div
+    class="d-flex flex-column align-center pa-5 w-md-50 w-lg-25 w-100 mx-3 justify-center rounded-xl border bg-white"
+  >
     <div class="d-flex align-center mb-2 justify-center">
       <h1 class="text-h4">Create Account</h1>
     </div>
 
-    <v-sheet class="mx-auto mt-2 w-100 w-md-75">
+    <v-sheet class="w-100 w-md-75 mx-auto mt-2">
       <form @submit.prevent="submit" class="d-flex flex-column ga-3">
         <v-text-field
           class="text-black"
@@ -62,7 +64,10 @@
       <h5>OR</h5>
     </div>
 
-    <v-btn @click="signUpWithGoogle" class="text-body-2 w-100 w-md-75 align-self-center" >
+    <v-btn
+      @click="signUpWithGoogle"
+      class="text-body-2 w-100 w-md-75 align-self-center"
+    >
       <Icon name="logos:google-icon" class="mr-3" />
 
       Sign up with Google
@@ -87,6 +92,10 @@
   } from 'firebase/auth'
   import { GoogleAuthProvider } from 'firebase/auth'
   import Swal from 'sweetalert2'
+
+  definePageMeta({
+    middleware: ['already-logged-in'],
+  })
 
   const { handleSubmit } = useForm({
     validationSchema: CreateAccountSchema,
@@ -143,15 +152,15 @@
 
   // Sign up with Google
   const signUpWithGoogle = async () => {
-      // Show loading alert
-      Swal.fire({
-        title: 'Creating Account...',
-        text: 'Please wait while we create your account',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading()
-        },
-      })
+    // Show loading alert
+    Swal.fire({
+      title: 'Creating Account...',
+      text: 'Please wait while we create your account',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading()
+      },
+    })
     try {
       await signInWithPopup(auth, googleAuthProvider)
       // Show success message

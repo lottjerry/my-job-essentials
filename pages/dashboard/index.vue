@@ -124,6 +124,7 @@
 <script setup>
   definePageMeta({
     layout: 'auth-layout',
+    middleware: ['auth'],
   })
 
   const step = ref(2)

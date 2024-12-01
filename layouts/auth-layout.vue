@@ -71,9 +71,17 @@
 
 <script setup>
   import { signOut } from 'firebase/auth'
+  
   const drawer = ref(false)
   const group = ref(null)
   const user = useCurrentUser()
+
+  const auth = useFirebaseAuth()
+
+  const logout = async () => {
+    await signOut(auth)
+    await navigateTo('/', { replace: true })
+  }
 
   watch(group, () => {
     drawer.value = false

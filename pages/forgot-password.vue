@@ -39,6 +39,11 @@
   import Swal from 'sweetalert2'
   import { sendPasswordResetEmail } from 'firebase/auth'
   import { useField, useForm } from 'vee-validate'
+
+  definePageMeta({
+    middleware: ['already-logged-in'],
+  })
+
   // get auth instance
   const auth = useFirebaseAuth()
 
@@ -46,7 +51,7 @@
     validationSchema: ForgotPasswordSchema,
   })
 
-    const email = useField('email')
+  const email = useField('email')
 
   // Send Password Reset Email
   const submit = handleSubmit(async (values) => {

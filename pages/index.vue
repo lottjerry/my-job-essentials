@@ -65,6 +65,10 @@
 </template>
 
 <script setup>
+  definePageMeta({
+    middleware: ['already-logged-in'],
+  })
+
   import Swal from 'sweetalert2'
   import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
   import { GoogleAuthProvider } from 'firebase/auth'

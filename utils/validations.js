@@ -13,3 +13,9 @@ export const CreateAccountSchema = object({
     .min(6, 'Password must be a minimum of 6 characters.')
     .oneOf([ref('password')], 'Passwords must match.'),
 })
+
+export const ForgotPasswordSchema = object({
+  email: string()
+    .email('Please enter a valid email.')
+    .required('Please enter an email.'),
+})

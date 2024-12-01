@@ -68,9 +68,7 @@
       Sign up with Google
     </v-btn>
 
-    <div class="d-flex flex-column ga-5 align-self-start mt-10">
-      <p class="font-weight-bold text-body-2">Forgot Password?</p>
-
+    <div class="d-flex flex-column ga-5 align-self-center mt-10">
       <div class="text-body-2 d-flex ga-1">
         <p>Already have an account?</p>
         <NuxtLink to="/" class="font-weight-bold">Sign In</NuxtLink>

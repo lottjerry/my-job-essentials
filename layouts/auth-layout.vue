@@ -54,6 +54,7 @@
             to="/dashboard/schedules"
           ></v-list-item>
           <v-list-item
+            @click="logout"
             prepend-icon="mdi-exit-to-app"
             color="primary"
             title="Sign Out"
@@ -68,22 +69,13 @@
   </v-card>
 </template>
 
-<script>
-  export default {
-    setup() {
-      const drawer = ref(false)
-      const group = ref(null)
-      const user = useCurrentUser()
+<script setup>
+  import { signOut } from 'firebase/auth'
+  const drawer = ref(false)
+  const group = ref(null)
+  const user = useCurrentUser()
 
-      watch(group, () => {
-        drawer.value = false
-      })
-
-      return {
-        drawer,
-        group,
-        user,
-      }
-    },
-  }
+  watch(group, () => {
+    drawer.value = false
+  })
 </script>

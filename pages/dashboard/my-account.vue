@@ -1,11 +1,11 @@
 <template>
   <div>
-    <v-container class="h-screen mt-10">
-      <v-card variant="outlined" height="500" width="350">
+    <v-container class="d-flex justify-center align-center h-screen">
+      <v-card variant="outlined" class="w-100 w-md-50 w-lg-25">
         <div class="d-flex pa-5 ga-5 bg-primary">
           <!-- Logo Begin -->
 
-          <div class="d-flex flex-column">
+          <div class="d-flex flex-column ">
             <div class="d-flex justify-center">
               <v-icon size="x-small" icon="mdi-calendar-month-outline"></v-icon>
             </div>
@@ -32,7 +32,7 @@
 
         <!-- Profile Picture -->
 
-        <div class="d-flex align-center pa-2 justify-center ma-2">
+        <div class="d-flex align-center pa-2 ma-2 justify-center">
           <v-icon icon="mdi-account" size="75"></v-icon>
         </div>
 
@@ -43,15 +43,11 @@
         <div
           class="d-flex flex-column align-center ga-2 pa-2 mb-5 justify-center"
         >
-          <p class="text-h5">Display Name</p>
+          <p class="text-h4">Display Name</p>
 
-          <v-btn
-            @click="toggleDisplayNameOverlay"
-            density="compact"
-            variant="text"
-            class="text-h6"
-            >{{ displayName }}</v-btn
-          >
+          <p density="compact" variant="text" class="text-h6">
+            {{ user.displayName }}
+          </p>
         </div>
 
         <!-- Name and Title End-->
@@ -64,7 +60,7 @@
           <div class="d-flex flex-column align-center justify-center">
             <p class="text-h6">Email</p>
 
-            <p class="text-body-2">sandra.bullock@workeseentials.com</p>
+            <p class="text-body-2">{{ user.email }}</p>
           </div>
 
           <div class="d-flex flex-column align-center justify-center">
@@ -75,72 +71,6 @@
         </div>
 
         <!-- User Info End -->
-
-        <!-- Display Name Overlay Begin -->
-
-        <v-overlay
-          v-model="displayNameOverlay"
-          class="align-center justify-center"
-          persistent
-          contained
-        >
-          <!-- Display Name Overlay Content Begin-->
-
-          <v-container>
-            <v-confirm-edit v-model="displayName" color="primary">
-              <template
-                v-slot:default="{ model: proxyModel, save, cancel, isPristine }"
-              >
-                <v-card
-                  title="Edit Display Name"
-                  width="300"
-                  class="d-flex flex-column"
-                >
-                  <template v-slot:text>
-                    <v-text-field
-                      base-color="primary"
-                      color="primary"
-                      class="mt-3"
-                      v-model="proxyModel.value"
-                      variant="outlined"
-                      label="Display Name"
-                    ></v-text-field>
-                  </template>
-
-                  <div class="d-flex ma-3 justify-end">
-                    <v-btn
-                      color="error"
-                      variant="plain"
-                      @click="
-                        () => {
-                          cancel()
-                          toggleDisplayNameOverlay()
-                        }
-                      "
-                      >Cancel</v-btn
-                    >
-                    <v-btn
-                      :color="!isPristine ? 'primary' : 'gray'"
-                      :disabled="isPristine"
-                      variant="plain"
-                      @click="
-                        () => {
-                          save()
-                          toggleDisplayNameOverlay()
-                        }
-                      "
-                      >Ok</v-btn
-                    >
-                  </div>
-                </v-card>
-              </template>
-            </v-confirm-edit>
-          </v-container>
-
-          <!-- Display Name Overlay Content End -->
-        </v-overlay>
-
-        <!-- Display Name Overlay End -->
       </v-card>
     </v-container>
   </div>
@@ -154,11 +84,5 @@
     layout: 'auth-layout',
   })
 
-  const displayName = shallowRef('Sandy')
-
-  const displayNameOverlay = ref(false)
-
-  const toggleDisplayNameOverlay = () => {
-    displayNameOverlay.value = !displayNameOverlay.value
-  }
+  const user = useCurrentUser()
 </script>

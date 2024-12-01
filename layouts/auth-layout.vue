@@ -62,16 +62,16 @@
           ></v-list-item>
         </v-list>
       </v-navigation-drawer>
-      <div>
+      <v-main class="bg-white">
         <slot />
-      </div>
+      </v-main>
     </v-layout>
   </v-card>
 </template>
 
 <script setup>
   import { signOut } from 'firebase/auth'
-  
+
   const drawer = ref(false)
   const group = ref(null)
   const user = useCurrentUser()

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <MobileSchedule v-if="mobile" />
-    <DesktopSchedule else />
+    <MobileSchedule v-if="sm" />
+    <DesktopSchedule v-else />
   </div>
 </template>
 <script setup>
@@ -12,5 +12,5 @@
     middleware: ['auth'],
   })
 
-  const { mobile } = useDisplay()
+  const { sm } = useDisplay()
 </script>

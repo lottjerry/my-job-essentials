@@ -3,7 +3,7 @@
     <v-stepper
       v-model="step"
       hide-actions
-      class="h-75 w-100 w-md-75 w-lg-50 mx-2"
+      class="h-75 w-100 w-md-75 w-lg-50 custom-overflow"
     >
       <!-- V Stepper Header Start -->
       <v-stepper-header>
@@ -177,12 +177,31 @@
         <!-- Step 3 -->
         <v-stepper-window-item :value="3">
           <v-card title="Organization Register" flat class="d-flex flex-column">
-            <v-sheet eet class="w-100 w-md-66 mx-auto my-10">
+            <v-sheet class="w-100 w-md-66 mx-auto my-10">
               <v-form
                 @submit="onSubmit"
                 @submit.prevent
                 class="d-flex flex-column"
               >
+                <v-text-field
+                  class="text-black"
+                  density="comfortable"
+                  prepend-inner-icon="mdi-pencil-circle-outline"
+                  color="primary"
+                  v-model="scheduleName"
+                  label="Schedule Name"
+                  variant="underlined"
+                ></v-text-field>
+                <v-select
+                v-model="department"
+                  variant="underlined"
+                  density="comfortable"
+                  chips
+                  clearable
+                  prepend-inner-icon="mdi-account-group-outline"
+                  label="Department"
+                  :items="['GROCERY', 'DELI', 'BAKERY', 'MEAT', 'PRODUCE']"
+                ></v-select>
                 <v-text-field
                   class="text-black"
                   density="comfortable"
@@ -248,5 +267,9 @@
   /* Ensure the button remains active even when the checkbox is disabled */
   .active-btn {
     pointer-events: auto;
+  }
+
+  .custom-overflow {
+    overflow-y: auto !important;
   }
 </style>

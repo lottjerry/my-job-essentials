@@ -1,6 +1,10 @@
 <template>
-  <div class="h-screen">
-    <v-stepper v-model="step" hide-actions class="h-75 mx-3 mt-10">
+  <div class="d-flex align-center h-screen justify-center">
+    <v-stepper
+      v-model="step"
+      hide-actions
+      class="h-75 w-100 w-md-75 w-lg-50 mx-2"
+    >
       <!-- V Stepper Header Start -->
       <v-stepper-header>
         <v-stepper-item
@@ -20,14 +24,22 @@
         <v-stepper-item
           :value="2"
           subtitle="Legal"
-          :selected-class="(!disablePrivacyPolicy && !appStore.acceptPrivacyPolicy) || (!disableTermsAndConditions && !appStore.acceptTermsAndConditions) ? 'text-error' : 'text-primary'"
+          :selected-class="
+            (!disablePrivacyPolicy && !appStore.acceptPrivacyPolicy) ||
+            (!disableTermsAndConditions && !appStore.acceptTermsAndConditions)
+              ? 'text-error'
+              : 'text-primary'
+          "
           :class="step > 2 ? 'text-success' : null"
           :color="step === 2 ? 'primary' : step > 2 ? 'success' : null"
           icon="mdi-scale-balance"
           edit-icon="mdi-pencil"
           :editable="step === 2"
           :complete="step > 2"
-          :error="(!disablePrivacyPolicy && !appStore.acceptPrivacyPolicy) || (!disableTermsAndConditions && !appStore.acceptTermsAndConditions)"
+          :error="
+            (!disablePrivacyPolicy && !appStore.acceptPrivacyPolicy) ||
+            (!disableTermsAndConditions && !appStore.acceptTermsAndConditions)
+          "
         ></v-stepper-item>
 
         <v-divider></v-divider>
@@ -165,7 +177,7 @@
         <!-- Step 3 -->
         <v-stepper-window-item :value="3">
           <v-card title="Organization Register" flat class="d-flex flex-column">
-            <v-sheet eet class="mx-auto my-10" width="280">
+            <v-sheet eet class="w-100 w-md-66 mx-auto my-10">
               <v-form
                 @submit="onSubmit"
                 @submit.prevent
@@ -230,7 +242,6 @@
     appStore.acceptPrivacyPolicy = false
     appStore.acceptTermsAndConditions = false
   }
-
 </script>
 
 <style scoped>

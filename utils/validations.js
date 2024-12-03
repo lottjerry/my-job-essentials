@@ -19,3 +19,27 @@ export const ForgotPasswordSchema = object({
     .email('Please enter a valid email.')
     .required('Please enter an email.'),
 })
+
+export const OrganizationRegistrationSchema = (organizationIDENV, organizationPasswordENV) =>
+  object({
+    scheduleName: string().required('Please enter a schedule name.'),
+    department: string().required('Please select a department.'),
+    organizationID: string()
+      .required('Please enter a organzationID.')
+      .test(
+        'isOrganizationIDCorrect',
+        'Organization ID is not valid.',
+        (value) => {
+          return value === organizationIDENV
+        },
+      ),
+    organizationPassword: string()
+      .required('Please enter a department password.')
+      .test(
+        'isOrganizationPasswordCorrect',
+        'Organization Password is not valid.',
+        (value) => {
+          return value === organizationPasswordENV
+        },
+      ),
+  })

@@ -178,48 +178,48 @@
         <v-stepper-window-item :value="3">
           <v-card title="Organization Register" flat class="d-flex flex-column">
             <v-sheet class="w-100 w-md-66 mx-auto my-10">
-              <v-form
-                @submit="onSubmit"
-                @submit.prevent
-                class="d-flex flex-column"
-              >
+              <form @submit.prevent="submit" class="d-flex flex-column">
                 <v-text-field
                   class="text-black"
                   density="comfortable"
                   prepend-inner-icon="mdi-pencil-circle-outline"
                   color="primary"
-                  v-model="scheduleName"
+                  v-model="scheduleName.value.value"
+                  :error-messages="scheduleName.errorMessage.value"
                   label="Schedule Name"
                   variant="underlined"
                 ></v-text-field>
                 <v-select
-                v-model="department"
+                  v-model="department.value.value"
+                  :error-messages="department.errorMessage.value"
                   variant="underlined"
                   density="comfortable"
                   chips
                   clearable
                   prepend-inner-icon="mdi-account-group-outline"
                   label="Department"
-                  :items="['GROCERY', 'DELI', 'BAKERY', 'MEAT', 'PRODUCE']"
+                  :items="['GROCERY', 'BAKERY', 'DELI', 'MEAT', 'PRODUCE']"
                 ></v-select>
                 <v-text-field
                   class="text-black"
+                  v-model="organizationID.value.value"
+                  :error-messages="organizationID.errorMessage.value"
                   density="comfortable"
                   prepend-inner-icon="mdi-card-account-details-outline"
                   color="primary"
-                  v-model="organizationID"
                   label="Organization ID"
                   variant="underlined"
                 ></v-text-field>
 
                 <v-text-field
                   class="text-black"
+                    v-model="organizationPasword.value.value"
+                  :error-messages="organizationPasword.errorMessage.value"
                   density="comfortable"
                   prepend-inner-icon="mdi-lock-outline"
                   :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
                   :type="visible ? 'text' : 'password'"
                   color="primary"
-                  v-model="organizationPassword"
                   label="Organization Password"
                   variant="underlined"
                   @click:append-inner="visible = !visible"
@@ -228,7 +228,7 @@
                 <v-btn class="bg-primary text-body-2 mt-5" type="submit"
                   >Register</v-btn
                 >
-              </v-form>
+              </form>
             </v-sheet></v-card
           >
           <v-btn
@@ -248,9 +248,24 @@
 
 <script setup>
   import { useAppStore } from '~/stores/appStore'
+  import Swal from 'sweetalert2'
+  import { useField, useForm } from 'vee-validate'
+
   definePageMeta({
     layout: 'auth-layout',
   })
+
+  const organizationIDENV = import.meta.env.VITE_ORGANIZATION_ID;
+  const organizationPasswordENV = import.meta.env.VITE_ORGANIZATION_PASSWORD;
+
+  const { handleSubmit } = useForm({
+    validationSchema: OrganizationRegistrationSchema(organizationIDENV, organizationPasswordENV),
+  })
+
+  const scheduleName = useField('scheduleName')
+  const department = useField('department')
+  const organizationID = useField('organizationID')
+  const organizationPasword = useField('organizationPassword')
 
   const step = ref(1) // Current step in the stepper
   const appStore = useAppStore()
@@ -261,6 +276,11 @@
     appStore.acceptPrivacyPolicy = false
     appStore.acceptTermsAndConditions = false
   }
+
+  const submit = handleSubmit ( async (values) => {
+    alert(values)
+  })
+
 </script>
 
 <style scoped>

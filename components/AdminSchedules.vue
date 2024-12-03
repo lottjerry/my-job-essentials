@@ -196,15 +196,12 @@
   // File upload and deletion functions with key updates
   const deletePreviousSchedule = () => {
     appStore.previousSchedule = []
-    previousWeekKey.value-- // Update key to rerender
   }
   const deleteCurrentSchedule = () => {
     appStore.currentSchedule = []
-    currentWeekKey.value-- // Update key to rerender
   }
   const deleteNextSchedule = () => {
     appStore.nextSchedule = []
-    nextWeekKey.value-- // Update key to rerender
   }
 
   const previousWeekUpload = async () => {
@@ -214,7 +211,6 @@
           previousWeekFiles.value.map(readCSVFile),
         )
         appStore.previousSchedule = allJsonData.flat()
-        previousWeekKey.value++ // Update key to rerender
       } catch (error) {
         console.error('Error converting CSV to JSON:', error)
       }
@@ -230,7 +226,6 @@
           currentWeekFiles.value.map(readCSVFile),
         )
         appStore.currentSchedule = allJsonData.flat()
-        currentWeekKey.value++ // Update key to rerender
       } catch (error) {
         console.error('Error converting CSV to JSON:', error)
       }
@@ -246,7 +241,6 @@
           nextWeekFiles.value.map(readCSVFile),
         )
         appStore.nextSchedule = allJsonData.flat()
-        nextWeekKey.value++ // Update key to rerender
       } catch (error) {
         console.error('Error converting CSV to JSON:', error)
       }
@@ -269,6 +263,8 @@
       reader.readAsText(file)
     })
   }
+;
+
 </script>
 
 <style>

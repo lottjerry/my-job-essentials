@@ -39,7 +39,7 @@
             title="
             My
             Schedule"
-            to="/dashboard/organization-register"
+            to="/dashboard"
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-account"

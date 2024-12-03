@@ -213,7 +213,7 @@
 
                 <v-text-field
                   class="text-black"
-                    v-model="organizationPasword.value.value"
+                  v-model="organizationPasword.value.value"
                   :error-messages="organizationPasword.errorMessage.value"
                   density="comfortable"
                   prepend-inner-icon="mdi-lock-outline"
@@ -250,16 +250,24 @@
   import { useAppStore } from '~/stores/appStore'
   import Swal from 'sweetalert2'
   import { useField, useForm } from 'vee-validate'
+  import { doc, setDoc } from 'firebase/firestore'
 
   definePageMeta({
     layout: 'auth-layout',
   })
 
-  const organizationIDENV = import.meta.env.VITE_ORGANIZATION_ID;
-  const organizationPasswordENV = import.meta.env.VITE_ORGANIZATION_PASSWORD;
+  const user = useCurrentUser()
+  const db = useFirestore()
+  const collectionName = 'users'
+
+  const organizationIDENV = import.meta.env.VITE_ORGANIZATION_ID
+  const organizationPasswordENV = import.meta.env.VITE_ORGANIZATION_PASSWORD
 
   const { handleSubmit } = useForm({
-    validationSchema: OrganizationRegistrationSchema(organizationIDENV, organizationPasswordENV),
+    validationSchema: OrganizationRegistrationSchema(
+      organizationIDENV,
+      organizationPasswordENV,
+    ),
   })
 
   const scheduleName = useField('scheduleName')
@@ -277,10 +285,47 @@
     appStore.acceptTermsAndConditions = false
   }
 
-  const submit = handleSubmit ( async (values) => {
-    alert(values)
-  })
+  const submit = handleSubmit(async (values) => {
+    try {
+      // Show loading alert
+      Swal.fire({
+        title: 'Updating Organization Info...',
+        text: 'Please wait while we register your organization.',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading()
+        },
+      })
+      //Update User Data to FireStore
+      const docRef = doc(db, collectionName, user.value.uid)
+      await setDoc(docRef, {
+        ScheduleName: values.scheduleName,
+        Department: values.department,
+        OrganizationID: values.organizationID,
+        acceptedPrivacyPolicy: appStore.acceptPrivacyPolicy,
+        acceptedTermsAndConditions: appStore.acceptTermsAndConditions,
+      })
 
+      // Show success message
+      Swal.fire({
+        icon: 'success',
+        title: 'Organization Registered!',
+        text: 'Your organization has been successfully registered.',
+        timer: 2500,
+        showConfirmButton: false,
+      }).then(() => {
+        // Close the SweetAlert and redirect user
+        navigateTo('/my-account', { replace: true })
+      })
+    } catch (error) {
+      console.log(error.message)
+      Swal.fire({
+        icon: 'error',
+        title: 'Something went wrong!',
+        text: error.message,
+      })
+    }
+  })
 </script>
 
 <style scoped>

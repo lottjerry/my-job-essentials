@@ -92,6 +92,7 @@
   } from 'firebase/auth'
   import { GoogleAuthProvider } from 'firebase/auth'
   import Swal from 'sweetalert2'
+  import { doc, setDoc } from 'firebase/firestore'
 
   definePageMeta({
     middleware: ['already-logged-in'],
@@ -108,6 +109,8 @@
   const googleAuthProvider = new GoogleAuthProvider()
 
   const auth = useFirebaseAuth()
+  const db = useFirestore()
+  const collectionName = 'users'
 
   // Sign up with email and password
   const submit = handleSubmit(async (values) => {
@@ -122,12 +125,20 @@
         },
       })
 
+      // Create User
       const { user } = await createUserWithEmailAndPassword(
         auth,
         values.email,
         values.password,
       )
+      // Update User Display Name
       await updateProfile(user, { displayName: values.displayName })
+
+      // Add User Data to FireStore
+      const docRef = doc(db, collectionName, user.uid)
+      await setDoc(docRef, {
+        OrganizationID: null,
+      })
 
       // Show success message
       Swal.fire({

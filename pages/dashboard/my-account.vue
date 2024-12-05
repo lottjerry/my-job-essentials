@@ -77,6 +77,11 @@
 </template>
 
 <script setup>
+  definePageMeta({
+    layout: 'auth-layout',
+    middleware: ['auth'],
+  })
+
   import { doc, getDoc } from 'firebase/firestore'
 
   // Firebase setup
@@ -84,10 +89,6 @@
   const user = useCurrentUser()
   const collectionName = 'users'
   const OrganizationID = ref('')
-
-  definePageMeta({
-    layout: 'auth-layout',
-  })
 
   // Function to fetch Firestore document
   const fetchDocument = async () => {
@@ -104,7 +105,6 @@
     }
   }
 
-  // Fetch the document on component mount
   onMounted(async () => {
     await fetchDocument()
   })

@@ -1,39 +1,52 @@
 <template>
-  <div>
-    <input type="file" @change="handleFileChange" />
+  <div class="d-flex flex-column align-center text-h5 justify-center">
+    <h1 class="mt-5">New Schedule</h1>
     <v-card
+      class="pa-5 d-flex flex-column align-center justify-center"
       :title="`WeekEnding: ${weekEnding}`"
-      v-if="parsedData"
-      class="pa-10"
     >
+      <v-file-input
+        width="500"
+        @change="handleFileChange"
+        clearable
+        label="New Schedule"
+        variant="outlined"
+      ></v-file-input>
+      <v-btn
+      append-icon="mdi-calendar-import"
+        @click="
+          uploadSchedules(
+            grocerySchedule,
+            bakerySchedule,
+            deliSchedule,
+            meatSchedule,
+            produceSchedule,
+          )
+        "
+        color="primary"
+        >Upload Schedule</v-btn
+      >
+      <v-btn class="mt-5" @click="store.toggleNewScheduleOverlay" color="error"
+        >Close</v-btn
+      >
       <v-data-table-virtual
+        v-if="parsedData"
         class="setMinWidth w-auto"
         :items="parsedData"
         height="500"
         fixed-header=""
       ></v-data-table-virtual>
     </v-card>
-    <v-btn
-      @click="
-        uploadSchedules(
-          grocerySchedule,
-          bakerySchedule,
-          deliSchedule,
-          meatSchedule,
-          produceSchedule,
-        )
-      "
-      color="primary"
-      >Upload Data</v-btn
-    >
   </div>
 </template>
 
 <script setup>
   import Papa from 'papaparse'
-  import { collection, setDoc, doc } from 'firebase/firestore'
+  import { collection, setDoc, doc, addDoc } from 'firebase/firestore'
   import Swal from 'sweetalert2'
+  import { useAppStore } from '#imports'
 
+  const store = useAppStore()
   const parsedData = ref(null)
   const grocery = ref(null)
   const grocerySchedule = ref(null)
@@ -45,7 +58,7 @@
   const meatSchedule = ref(null)
   const produce = ref(null)
   const produceSchedule = ref(null)
-  const weekEnding = ref(null)
+  const weekEnding = ref('None')
   const dates = ref(null)
   const dateKeys = ref(null)
 
@@ -65,6 +78,14 @@
     })
   }
 
+  const addCollectionName = async (collectionName) => {
+    try {
+      await addDoc(collection(db, 'ScheduleNames'), { name: collectionName })
+    } catch (error) {
+      console.error('Error adding collection name:', error)
+    }
+  }
+
   const filterDepartments = async (newValue) => {
     weekEnding.value = newValue[0].Column7.replace(/\//g, '.')
     dates.value = newValue.filter((date, index) => index === 1)
@@ -77,7 +98,9 @@
     )
     deli.value = newValue.filter((employee, index) => index > 53 && index < 62)
     meat.value = newValue.filter((employee, index) => index > 62 && index < 70)
-    produce.value = newValue.filter((employee, index) => index > 70)
+    produce.value = newValue.filter(
+      (employee, index) => index > 70 && index < 75,
+    )
   }
 
   const getDateKeys = async (dates) => {
@@ -152,7 +175,7 @@
         Hours: employee.Column9,
         Department: 'Deli',
       }
-      
+
       return schedule
     })
 
@@ -233,30 +256,35 @@
     })
     try {
       // Grocery setDoc
+      await addCollectionName(collectionGroceryName)
       for (const employee of grocerySchedule) {
         const customId = employee.Name || `custom-id-${Date.now()}`
         const docRef = doc(GroceryRef, customId)
         await setDoc(docRef, employee)
       }
       // Bakery setDoc
+      await addCollectionName(collectionBakeryName)
       for (const employee of bakerySchedule) {
         const customId = employee.Name || `custom-id-${Date.now()}`
         const docRef = doc(BakeryRef, customId)
         await setDoc(docRef, employee)
       }
       // Deli setDoc
+      await addCollectionName(collectionDeliName)
       for (const employee of deliSchedule) {
         const customId = employee.Name || `custom-id-${Date.now()}`
         const docRef = doc(DeliRef, customId)
         await setDoc(docRef, employee)
       }
       // Meat setDoc
+      await addCollectionName(collectionMeatName)
       for (const employee of meatSchedule) {
         const customId = employee.Name || `custom-id-${Date.now()}`
         const docRef = doc(MeatRef, customId)
         await setDoc(docRef, employee)
       }
       // Produce setDoc
+      await addCollectionName(collectionProduceName)
       for (const employee of produceSchedule) {
         const customId = employee.Name || `custom-id-${Date.now()}`
         const docRef = doc(ProduceRef, customId)
@@ -270,8 +298,7 @@
         timer: 2500,
         showConfirmButton: false,
       }).then(() => {
-        // Close the SweetAlert and redirect user
-        navigateTo('/dashboard', { replace: true })
+        store.toggleNewScheduleOverlay()
       })
     } catch (error) {
       Swal.fire({

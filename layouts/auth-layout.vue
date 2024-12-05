@@ -37,8 +37,7 @@
             prepend-icon="mdi-calendar-month"
             color="primary"
             title="
-            My
-            Schedule"
+            Schedules"
             to="/dashboard"
           ></v-list-item>
           <v-list-item
@@ -50,7 +49,7 @@
           <v-list-item
             prepend-icon="mdi-calendar-multiple"
             color="primary"
-            title="Schedules"
+            title="Admin Schedules"
             to="/dashboard/schedules"
           ></v-list-item>
           <v-list-item

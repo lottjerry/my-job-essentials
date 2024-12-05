@@ -251,6 +251,7 @@
   import Swal from 'sweetalert2'
   import { useField, useForm } from 'vee-validate'
   import { doc, setDoc } from 'firebase/firestore'
+  import { reloadNuxtApp } from 'nuxt/app'
 
   definePageMeta({
     layout: 'auth-layout',
@@ -315,7 +316,11 @@
         showConfirmButton: false,
       }).then(() => {
         // Close the SweetAlert and redirect user
-        navigateTo('/my-account', { replace: true })
+        // navigateTo('/my-account', { replace: true })
+        reloadNuxtApp({
+          path: '/dashboard',
+          ttl: 1000, // default 10000
+        })
       })
     } catch (error) {
       console.log(error.message)

@@ -118,7 +118,7 @@
       // Show loading alert
       Swal.fire({
         title: 'Creating Account...',
-        text: 'Please wait while we create your account',
+        text: 'Please wait while we create your account.',
         allowOutsideClick: false,
         didOpen: () => {
           Swal.showLoading()
@@ -166,7 +166,7 @@
     // Show loading alert
     Swal.fire({
       title: 'Creating Account...',
-      text: 'Please wait while we create your account',
+      text: 'Please wait while we create your account.',
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading()

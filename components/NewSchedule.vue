@@ -3,7 +3,7 @@
     <h1 class="mt-5">New Schedule</h1>
     <v-card
       class="pa-5 d-flex flex-column align-center justify-center"
-      :title="`WeekEnding: ${weekEnding}`"
+      :title="`WeekEnding: ${week}`"
     >
       <v-file-input
         width="500"
@@ -13,7 +13,7 @@
         variant="outlined"
       ></v-file-input>
       <v-btn
-      append-icon="mdi-calendar-import"
+        append-icon="mdi-calendar-import"
         @click="
           uploadSchedules(
             grocerySchedule,
@@ -59,8 +59,7 @@
   const produce = ref(null)
   const produceSchedule = ref(null)
   const weekEnding = ref('None')
-  const dates = ref(null)
-  const dateKeys = ref(null)
+  const week = ref('none')
 
   const db = useFirestore()
 
@@ -78,17 +77,18 @@
     })
   }
 
-  const addCollectionName = async (collectionName) => {
+  const addCollectionInfo = async (collectionName, department) => {
     try {
-      await addDoc(collection(db, 'ScheduleNames'), { name: collectionName })
+      await addDoc(collection(db, 'ScheduleInfo'), { name: collectionName, weekEnding: week.value, department: department })
     } catch (error) {
       console.error('Error adding collection name:', error)
     }
   }
 
   const filterDepartments = async (newValue) => {
+
     weekEnding.value = newValue[0].Column7.replace(/\//g, '.')
-    dates.value = newValue.filter((date, index) => index === 1)
+    week.value = newValue[0].Column7
     grocery.value = newValue.filter(
       (employee, index) =>
         (employee.Column1 || employee.Column2) && index > 2 && index < 44,
@@ -103,38 +103,23 @@
     )
   }
 
-  const getDateKeys = async (dates) => {
-    dateKeys.value = dates.map((date) => {
-      return {
-        Sunday: 'Sunday ' + date.Column2,
-        Monday: 'Monday ' + date.Column3,
-        Tuesday: 'Tuesday ' + date.Column4,
-        Wednesday: 'Wednesday ' + date.Column5,
-        Thursday: 'Thursday ' + date.Column6,
-        Friday: 'Friday ' + date.Column7,
-        Saturday: 'Saturday ' + date.Column8,
-      }
-    })
-  }
-
   const mapDepartmentSchedules = async (
     grocery,
     bakery,
     deli,
     meat,
     produce,
-    dateKeys,
   ) => {
     grocerySchedule.value = grocery.map((employee, index) => {
       let schedule = {
         Name: employee.Column1.toUpperCase(),
-        [dateKeys[0].Sunday]: employee.Column2,
-        [dateKeys[0].Monday]: employee.Column3,
-        [dateKeys[0].Tuesday]: employee.Column4,
-        [dateKeys[0].Wednesday]: employee.Column5,
-        [dateKeys[0].Thursday]: employee.Column6,
-        [dateKeys[0].Friday]: employee.Column7,
-        [dateKeys[0].Saturday]: employee.Column8,
+        Sunday: employee.Column2,
+        Monday: employee.Column3,
+        Tuesday: employee.Column4,
+        Wednesday: employee.Column5,
+        Thursday: employee.Column6,
+        Friday: employee.Column7,
+        Saturday: employee.Column8,
         Hours: employee.Column9,
         Department: 'Grocery',
       }
@@ -148,13 +133,13 @@
     bakerySchedule.value = bakery.map((employee, index) => {
       let schedule = {
         Name: employee.Column1.toUpperCase(),
-        [dateKeys[0].Sunday]: employee.Column2,
-        [dateKeys[0].Monday]: employee.Column3,
-        [dateKeys[0].Tuesday]: employee.Column4,
-        [dateKeys[0].Wednesday]: employee.Column5,
-        [dateKeys[0].Thursday]: employee.Column6,
-        [dateKeys[0].Friday]: employee.Column7,
-        [dateKeys[0].Saturday]: employee.Column8,
+        Sunday: employee.Column2,
+        Monday: employee.Column3,
+        Tuesday: employee.Column4,
+        Wednesday: employee.Column5,
+        Thursday: employee.Column6,
+        Friday: employee.Column7,
+        Saturday: employee.Column8,
         Hours: employee.Column9,
         Department: 'Bakery',
       }
@@ -165,13 +150,13 @@
     deliSchedule.value = deli.map((employee, index) => {
       let schedule = {
         Name: employee.Column1.toUpperCase(),
-        [dateKeys[0].Sunday]: employee.Column2,
-        [dateKeys[0].Monday]: employee.Column3,
-        [dateKeys[0].Tuesday]: employee.Column4,
-        [dateKeys[0].Wednesday]: employee.Column5,
-        [dateKeys[0].Thursday]: employee.Column6,
-        [dateKeys[0].Friday]: employee.Column7,
-        [dateKeys[0].Saturday]: employee.Column8,
+        Sunday: employee.Column2,
+        Monday: employee.Column3,
+        Tuesday: employee.Column4,
+        Wednesday: employee.Column5,
+        Thursday: employee.Column6,
+        Friday: employee.Column7,
+        Saturday: employee.Column8,
         Hours: employee.Column9,
         Department: 'Deli',
       }
@@ -182,13 +167,13 @@
     meatSchedule.value = meat.map((employee, index) => {
       let schedule = {
         Name: employee.Column1.toUpperCase(),
-        [dateKeys[0].Sunday]: employee.Column2,
-        [dateKeys[0].Monday]: employee.Column3,
-        [dateKeys[0].Tuesday]: employee.Column4,
-        [dateKeys[0].Wednesday]: employee.Column5,
-        [dateKeys[0].Thursday]: employee.Column6,
-        [dateKeys[0].Friday]: employee.Column7,
-        [dateKeys[0].Saturday]: employee.Column8,
+        Sunday: employee.Column2,
+        Monday: employee.Column3,
+        Tuesday: employee.Column4,
+        Wednesday: employee.Column5,
+        Thursday: employee.Column6,
+        Friday: employee.Column7,
+        Saturday: employee.Column8,
         Hours: employee.Column9,
         Department: 'Meat',
       }
@@ -203,13 +188,13 @@
     produceSchedule.value = produce.map((employee, index) => {
       let schedule = {
         Name: employee.Column1.toUpperCase(),
-        [dateKeys[0].Sunday]: employee.Column2,
-        [dateKeys[0].Monday]: employee.Column3,
-        [dateKeys[0].Tuesday]: employee.Column4,
-        [dateKeys[0].Wednesday]: employee.Column5,
-        [dateKeys[0].Thursday]: employee.Column6,
-        [dateKeys[0].Friday]: employee.Column7,
-        [dateKeys[0].Saturday]: employee.Column8,
+        Sunday: employee.Column2,
+        Monday: employee.Column3,
+        Tuesday: employee.Column4,
+        Wednesday: employee.Column5,
+        Thursday: employee.Column6,
+        Friday: employee.Column7,
+        Saturday: employee.Column8,
         Hours: employee.Column9,
         Department: 'Bakery',
       }
@@ -256,35 +241,35 @@
     })
     try {
       // Grocery setDoc
-      await addCollectionName(collectionGroceryName)
+      await addCollectionInfo(collectionGroceryName, 'Grocery')
       for (const employee of grocerySchedule) {
         const customId = employee.Name || `custom-id-${Date.now()}`
         const docRef = doc(GroceryRef, customId)
         await setDoc(docRef, employee)
       }
       // Bakery setDoc
-      await addCollectionName(collectionBakeryName)
+      await addCollectionInfo(collectionBakeryName, 'Bakery')
       for (const employee of bakerySchedule) {
         const customId = employee.Name || `custom-id-${Date.now()}`
         const docRef = doc(BakeryRef, customId)
         await setDoc(docRef, employee)
       }
       // Deli setDoc
-      await addCollectionName(collectionDeliName)
+      await addCollectionInfo(collectionDeliName, 'Deli')
       for (const employee of deliSchedule) {
         const customId = employee.Name || `custom-id-${Date.now()}`
         const docRef = doc(DeliRef, customId)
         await setDoc(docRef, employee)
       }
       // Meat setDoc
-      await addCollectionName(collectionMeatName)
+      await addCollectionInfo(collectionMeatName, 'Meat')
       for (const employee of meatSchedule) {
         const customId = employee.Name || `custom-id-${Date.now()}`
         const docRef = doc(MeatRef, customId)
         await setDoc(docRef, employee)
       }
       // Produce setDoc
-      await addCollectionName(collectionProduceName)
+      await addCollectionInfo(collectionProduceName, 'Produce')
       for (const employee of produceSchedule) {
         const customId = employee.Name || `custom-id-${Date.now()}`
         const docRef = doc(ProduceRef, customId)
@@ -311,14 +296,12 @@
 
   watch(parsedData, async (newValue) => {
     await filterDepartments(newValue)
-    await getDateKeys(dates.value)
     await mapDepartmentSchedules(
       grocery.value,
       bakery.value,
       deli.value,
       meat.value,
       produce.value,
-      dateKeys.value,
     )
   })
 </script>

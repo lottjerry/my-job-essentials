@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-center h-screen justify-center">
+
     <v-stepper
       v-model="step"
       hide-actions
@@ -198,7 +198,7 @@
                   clearable
                   prepend-inner-icon="mdi-account-group-outline"
                   label="Department"
-                  :items="['GROCERY', 'BAKERY', 'DELI', 'MEAT', 'PRODUCE']"
+                  :items="['Grocery', 'Bakery', 'Deli', 'Meat', 'Produce']"
                 ></v-select>
                 <v-text-field
                   class="text-black"
@@ -243,7 +243,7 @@
       </v-stepper-window>
       <!-- V Stepper Window End -->
     </v-stepper>
-  </div>
+
 </template>
 
 <script setup>
@@ -300,7 +300,7 @@
       //Update User Data to FireStore
       const docRef = doc(db, collectionName, user.value.uid)
       await setDoc(docRef, {
-        ScheduleName: values.scheduleName,
+        ScheduleName: values.scheduleName.toUpperCase(),
         Department: values.department,
         OrganizationID: values.organizationID,
         acceptedPrivacyPolicy: appStore.acceptPrivacyPolicy,

@@ -22,7 +22,7 @@
           prepend-icon="mdi-calendar-plus"
           class="mt-5"
           @click="store.toggleNewScheduleOverlay"
-          >Schedules</v-btn
+          >New Schedule</v-btn
         >
         <v-card class="pa-5 ma-5 overflow-y-auto" height="400px" width="400px">
           <div class="d-flex flex-column ga-4">

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="h-screen d-flex justify-center align-center white">
     <div v-if="OrganizationID">
       <MobileSchedule v-if="sm" />
       <DesktopSchedule v-else />

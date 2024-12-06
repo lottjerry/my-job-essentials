@@ -1,8 +1,9 @@
 <template>
-  <div class="h-screen d-flex justify-center align-center white">
+  <div class="d-flex align-center white h-screen justify-center">
     <div v-if="OrganizationID">
-      <MobileSchedule v-if="sm" />
-      <DesktopSchedule v-else />
+      <div>
+        <Schedule />
+      </div>
     </div>
     <OrganizationRegister v-else />
   </div>
@@ -45,5 +46,5 @@
   })
 
   // Vuetify display logic
-  const { sm } = useDisplay()
+  const { mobile } = useDisplay()
 </script>

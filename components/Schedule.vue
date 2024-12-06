@@ -2,30 +2,47 @@
   <v-card
     class="pa-5 d-flex flex-column align-center bg-primary justify-center"
   >
-    <h1 class="mt-5">My Schedule</h1>
-    <h2>Week Ending: {{ weekEnding }}</h2>
+    <div class="pb-4" v-if="mobile">
+      <h3 class="mt-5">Schedule</h3>
+      <h4>Week Ending: {{ weekEnding }}</h4>
+    </div>
+    <div class="pb-10" v-else>
+      <h1 class="mt-5">My Schedule</h1>
+      <h2>Week Ending: {{ weekEnding }}</h2>
+    </div>
+
     <v-select
       v-model="selectSchedule"
-      width="500px"
+      :width="!mobile ? '500' : '80dvw'"
+      :density="!mobile ? 'default' : 'compact'"
       clearable
       chips
-      label="Select"
+      label="Select Schedule"
       :items="NameOfUserScheduleByDepartment"
       variant="outlined"
     ></v-select>
+    <v-checkbox
+      density="compact"
+      v-model="isUserSchedule"
+      label="Show only my schedule"
+    />
     <v-data-table-virtual
       v-if="schedules"
       class="setMinWidth pa-5"
-      :items="schedules"
-      height="500"
+      :density="!mobile ? 'default' : 'compact'"
+      :mobile="mobile"
+      :items="displayedSchedules"
+      :height="!mobile ? '500' : '60dvh'"
       fixed-header=""
     ></v-data-table-virtual>
   </v-card>
-  <p>{{ user.ScheduleName }}</p>
 </template>
 <script setup>
   import { doc, getDoc, collection, getDocs } from 'firebase/firestore'
   import { getAuth, onAuthStateChanged } from 'firebase/auth' // To handle authentication
+  import { useDisplay } from 'vuetify'
+
+  const { mobile } = useDisplay()
 
   const db = useFirestore()
   const userInfo = ref('')
@@ -36,6 +53,8 @@
   const selectSchedule = ref(null)
   const weekEnding = ref(null)
   const dates = ref([])
+  const userSchedule = ref([])
+  const isUserSchedule = ref(false)
 
   const extractAndFormatDate = async (scheduleName) => {
     // Split the string by the underscore character
@@ -136,13 +155,26 @@
     )
   }
 
+  const getUserSchedule = async () => {
+    userSchedule.value = schedules.value.filter((schedule) => {
+      return schedule.Name === userInfo.value.ScheduleName
+    })
+  }
+
+  const displayedSchedules = computed(() => {
+    return isUserSchedule.value ? userSchedule.value : schedules.value
+  })
+
   watch(selectSchedule, async (newValue) => {
     if (newValue) {
       await extractAndFormatDate(newValue)
       await getLast7Days(weekEnding.value)
       await getSchedule(newValue)
+      await getUserSchedule()
+      console.log(userSchedule.value)
     } else {
       schedules.value = []
+      userSchedule.value = []
       weekEnding.value = null
       dates.value = []
     }

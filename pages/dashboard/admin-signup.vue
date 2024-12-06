@@ -31,17 +31,28 @@
 </template>
 
 <script setup>
-
   import Swal from 'sweetalert2'
-  import { doc, updateDoc  } from 'firebase/firestore'
+  import { doc, updateDoc } from 'firebase/firestore'
+  import { signOut } from 'firebase/auth'
+
+  definePageMeta({
+    layout: 'auth-layout',
+    middleware: ['auth'],
+  })
 
   const db = useFirestore()
   const user = useCurrentUser()
   const collectionName = 'users'
+  const auth = useFirebaseAuth()
 
   const visible = ref(false)
   const password = ref('')
   const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD
+
+  const logout = async () => {
+    await signOut(auth)
+    await navigateTo('/', { replace: true })
+  }
 
   const submit = async () => {
     try {
@@ -62,16 +73,15 @@
           Admin: true,
         })
 
-        // Success case: Password matches
-        await Swal.fire({
-          icon: 'success',
-          title: 'You are now an admin!',
-          timer: 1500,
-          showConfirmButton: false,
-        })
-
-        // Redirect the user
-        navigateTo('/dashboard/admin-schedules', { replace: true })
+        Swal.fire({
+        icon: 'success',
+        title: 'You are now an admin!',
+        text: 'Please sign back in for changes to take effect.',
+        confirmButtonText: 'Sign Out',
+      }).then(() => {
+        // Run logout when the confirmation button is clicked
+        logout()
+      })
       } else {
         // Password does not match
         throw new Error('Invalid password')

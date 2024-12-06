@@ -47,10 +47,10 @@
             to="/dashboard/my-account"
           ></v-list-item>
           <v-list-item
-            prepend-icon="mdi-calendar-multiple"
+            :prepend-icon="(isAdmin ? 'mdi-calendar-multiple' : 'mdi-shield-account-outline')"
             color="primary"
-            title="Admin Schedules"
-            to="/dashboard/admin-schedules"
+            :title="(!isAdmin ? 'Admin SignUp' : 'Admin Schedules')"
+            :to="!isAdmin ? '/dashboard/admin-signup':'/dashboard/admin-schedules'"
           ></v-list-item>
           <v-list-item
             @click="logout"
@@ -70,10 +70,16 @@
 
 <script setup>
   import { signOut } from 'firebase/auth'
+  import { doc, getDoc } from 'firebase/firestore'
+
+  // Firebase setup
+  const db = useFirestore()
+  const user = useCurrentUser()
+  const collectionName = 'users'
+  const isAdmin = ref(false)
 
   const drawer = ref(false)
   const group = ref(null)
-  const user = useCurrentUser()
 
   const auth = useFirebaseAuth()
 
@@ -82,7 +88,27 @@
     await navigateTo('/', { replace: true })
   }
 
+  // Function to fetch Firestore document
+  const fetchDocument = async () => {
+    const docRef = doc(db, collectionName, user.value.uid) // Updated Firestore syntax
+    try {
+      const docSnap = await getDoc(docRef)
+      if (docSnap.exists()) {
+        isAdmin.value = docSnap.data().Admin
+      } else {
+        console.log('No such document!')
+      }
+    } catch (error) {
+      console.error('Error getting document:', error)
+    }
+  }
+
   watch(group, () => {
     drawer.value = false
+  })
+
+  // Fetch the document on component mount
+  onMounted(async () => {
+    await fetchDocument()
   })
 </script>

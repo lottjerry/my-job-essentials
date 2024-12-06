@@ -50,7 +50,7 @@
             prepend-icon="mdi-calendar-multiple"
             color="primary"
             title="Admin Schedules"
-            to="/dashboard/schedules"
+            to="/dashboard/admin-schedules"
           ></v-list-item>
           <v-list-item
             @click="logout"

@@ -20,7 +20,7 @@
   const OrganizationID = ref('')
 
   // Page meta
-  definePageMeta({
+ definePageMeta({
     layout: 'auth-layout',
     middleware: ['auth'],
   })

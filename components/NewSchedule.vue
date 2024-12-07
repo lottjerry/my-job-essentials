@@ -42,7 +42,7 @@
 
 <script setup>
   import Papa from 'papaparse'
-  import { collection, setDoc, doc, addDoc } from 'firebase/firestore'
+  import { collection, setDoc, doc } from 'firebase/firestore'
   import Swal from 'sweetalert2'
   import { useAppStore } from '#imports'
 
@@ -78,15 +78,20 @@
   }
 
   const addCollectionInfo = async (collectionName, department) => {
+    const collectionRef = collection(db, 'ScheduleInfo')
     try {
-      await addDoc(collection(db, 'ScheduleInfo'), { name: collectionName, weekEnding: week.value, department: department })
+      const docRef = doc(collectionRef, collectionName)
+      await setDoc(docRef, {
+        name: collectionName,
+        weekEnding: week.value,
+        department: department,
+      })
     } catch (error) {
       console.error('Error adding collection name:', error)
     }
   }
 
   const filterDepartments = async (newValue) => {
-
     weekEnding.value = newValue[0].Column7.replace(/\//g, '.')
     week.value = newValue[0].Column7
     grocery.value = newValue.filter(

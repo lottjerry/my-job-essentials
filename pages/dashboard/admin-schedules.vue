@@ -52,7 +52,7 @@
 
   const store = useAppStore()
   const db = useFirestore()
-  const collectionName = 'ScheduleNames'
+  const collectionName = 'ScheduleInfo'
   const scheduleNames = ref(null)
 
   const getAllSchedules = async () => {

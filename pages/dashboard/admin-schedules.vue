@@ -5,7 +5,7 @@
       v-model="store.newScheduleOverlay"
       class="bg-primary d-flex align-center h-screen justify-center"
     >
-      <v-card class="d-flex align-center mt-10 justify-center">
+      <v-card>
         <NewSchedule v-if="lgAndUp" />
       </v-card>
     </v-navigation-drawer>

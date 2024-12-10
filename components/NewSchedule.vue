@@ -12,6 +12,18 @@
         label="New Schedule"
         variant="outlined"
       ></v-file-input>
+      <v-select
+        v-model="selectedSchedule"
+        width="300"
+        density="compact"
+        chips
+        label="Select Schedule"
+        :items="items"
+        item-title="title"
+        item-value="value"
+        variant="outlined"
+        return-object
+      ></v-select>
       <v-btn
         append-icon="mdi-calendar-import"
         @click="
@@ -32,7 +44,7 @@
       <v-data-table-virtual
         v-if="parsedData"
         class="setMinWidth w-auto"
-        :items="parsedData"
+        :items="selectedSchedule.value"
         height="500"
         fixed-header=""
       ></v-data-table-virtual>
@@ -60,6 +72,9 @@
   const produceSchedule = ref(null)
   const weekEnding = ref('None')
   const week = ref('none')
+  const selectedSchedule = ref('N/A')
+
+  const items = ref([])
 
   const db = useFirestore()
 
@@ -95,16 +110,13 @@
     weekEnding.value = newValue[0].Column7.replace(/\//g, '.')
     week.value = newValue[0].Column7
     grocery.value = newValue.filter(
-      (employee, index) =>
-        (employee.Column1 || employee.Column2) && index > 2 && index < 44,
+      (employee,) => employee.Column1 && employee.Column10 === 'Grocery',
     )
-    bakery.value = newValue.filter(
-      (employee, index) => index > 45 && index < 53,
-    )
-    deli.value = newValue.filter((employee, index) => index > 53 && index < 62)
-    meat.value = newValue.filter((employee, index) => index > 62 && index < 70)
+    bakery.value = newValue.filter((employee) => employee.Column10 === 'Bakery')
+    deli.value = newValue.filter((employee) => employee.Column10 === 'Deli')
+    meat.value = newValue.filter((employee) => employee.Column10 === 'Meat')
     produce.value = newValue.filter(
-      (employee, index) => index > 70 && index < 75,
+      (employee) => employee.Column10 === 'Produce',
     )
   }
 
@@ -128,10 +140,6 @@
         Hours: employee.Column9,
         Department: 'Grocery',
       }
-      if (employee.Column10) {
-        schedule.Total_Hours = employee.Column10
-      }
-
       return schedule
     })
 
@@ -201,15 +209,34 @@
         Friday: employee.Column7,
         Saturday: employee.Column8,
         Hours: employee.Column9,
-        Department: 'Bakery',
-      }
-
-      if (employee.Column1 === 'ANN') {
-        schedule.Total_Hours = employee.Column10
+        Department: 'Produce',
       }
 
       return schedule
     })
+
+    items.value = [
+      {
+        title: 'Grocery Schedule',
+        value: grocerySchedule.value,
+      },
+      {
+        title: 'Bakery Schedule',
+        value: bakerySchedule.value,
+      },
+      {
+        title: 'Deli Schedule',
+        value: deliSchedule.value,
+      },
+      {
+        title: 'Meat Schedule',
+        value: meatSchedule.value,
+      },
+      {
+        title: 'Produce Schedule',
+        value: produceSchedule.value,
+      },
+    ]
   }
 
   // Upload Schedules

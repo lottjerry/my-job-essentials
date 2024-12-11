@@ -7,7 +7,7 @@
         :location="$vuetify.display.mobile ? 'bottom' : undefined"
         :density="$vuetify.display.mobile ? 'compact' : undefined"
       >
-        <v-toolbar-title>Work Essentials</v-toolbar-title>
+        <v-toolbar-title>My Job Essentials</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
@@ -47,10 +47,16 @@
             to="/dashboard/my-account"
           ></v-list-item>
           <v-list-item
-            :prepend-icon="(isAdmin ? 'mdi-calendar-multiple' : 'mdi-shield-account-outline')"
+            :prepend-icon="
+              isAdmin ? 'mdi-calendar-multiple' : 'mdi-shield-account-outline'
+            "
             color="primary"
-            :title="(!isAdmin ? 'Admin SignUp' : 'Admin Schedules')"
-            :to="!isAdmin ? '/dashboard/admin-signup':'/dashboard/admin-schedules'"
+            :title="!isAdmin ? 'Admin SignUp' : 'Admin Schedules'"
+            :to="
+              !isAdmin
+                ? '/dashboard/admin-signup'
+                : '/dashboard/admin-schedules'
+            "
           ></v-list-item>
           <v-list-item
             @click="logout"

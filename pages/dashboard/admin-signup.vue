@@ -1,9 +1,11 @@
 <template>
-  <div class="d-flex flex-column align-center h-screen justify-center bg-primary">
+  <div
+    class="d-flex flex-column align-center bg-primary h-screen justify-center"
+  >
     <div v-if="!mobile">
       <v-card class="pa-5">
         <div class="d-flex flex-column align-center mb-5 justify-center">
-          <h1 class="text-h3 mb-5 text-center">Work Essentials</h1>
+          <h1 class="text-h3 mb-5 text-center">My Job Essentials</h1>
           <Logo size="28" />
           <h2 class="align-self-center">Admin Sign up</h2>
         </div>

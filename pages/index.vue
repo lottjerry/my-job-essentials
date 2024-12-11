@@ -3,7 +3,7 @@
     class="d-flex flex-column align-centerjustify-center pa-5 w-md-50 w-lg-25 mx-3 rounded-xl border bg-white"
   >
     <div class="d-flex flex-column align-center mb-5 justify-center">
-      <h1 class="text-h3 mb-5 text-center">Work Essentials</h1>
+      <h1 class="text-h3 mb-5 text-center">My Job Essentials</h1>
       <Logo size="28" />
     </div>
 
@@ -49,10 +49,10 @@
       Continue with Google
     </v-btn>
 
-    <div class="d-flex flex-column ga-5 mt-10 align-self-center">
-      <div class="font-weight-bold text-body-2"> <NuxtLink to="/forgot-password"
-          >Forgot Password?</NuxtLink
-        ></div>
+    <div class="d-flex flex-column ga-5 align-self-center mt-10">
+      <div class="font-weight-bold text-body-2">
+        <NuxtLink to="/forgot-password">Forgot Password?</NuxtLink>
+      </div>
 
       <div class="text-body-2 d-flex ga-1">
         <p>Don't have an account?</p>

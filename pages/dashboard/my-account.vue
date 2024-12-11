@@ -24,7 +24,7 @@
           <!-- Logo End -->
 
           <div>
-            <h4>Work</h4>
+            <h4>My Job</h4>
 
             <h4>Essentials</h4>
           </div>

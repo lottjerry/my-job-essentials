@@ -13,7 +13,7 @@
       style="max-height: 500px"
       v-scroll.self="onScroll"
     >
-     <h1>Terms and conditions</h1>
+<h1>Terms and conditions</h1>
 <p>These terms and conditions (“Agreement”) set forth the general terms and conditions of your use of the <a href="https://www.myjobessentials.com">myjobessentials.com</a> website (“Website” or “Service”) and any of its related products and services (collectively, “Services”). This Agreement is legally binding between you (“User”, “you” or “your”) and this Website operator (“Operator”, “we”, “us” or “our”). If you are entering into this Agreement on behalf of a business or other legal entity, you represent that you have the authority to bind such entity to this Agreement, in which case the terms “User”, “you” or “your” shall refer to such entity. If you do not have such authority, or if you do not agree with the terms of this Agreement, you must not accept this Agreement and may not access and use the Website and Services. By accessing and using the Website and Services, you acknowledge that you have read, understood, and agree to be bound by the terms of this Agreement. You acknowledge that this Agreement is a contract between you and the Operator, even though it is electronic and is not physically signed by you, and it governs your use of the Website and Services.</p>
 <div class="toc"><h3>Table of contents</h3><ol class="toc"><li><a href="#accounts-and-membership">Accounts and membership</a></li><li><a href="#links-to-other-resources">Links to other resources</a></li><li><a href="#prohibited-uses">Prohibited uses</a></li><li><a href="#intellectual-property-rights">Intellectual property rights</a></li><li><a href="#indemnification">Indemnification</a></li><li><a href="#severability">Severability</a></li><li><a href="#dispute-resolution">Dispute resolution</a></li><li><a href="#changes-and-amendments">Changes and amendments</a></li><li><a href="#acceptance-of-these-terms">Acceptance of these terms</a></li><li><a href="#contacting-us">Contacting us</a></li></ol></div>
 <h2 id="accounts-and-membership">Accounts and membership</h2>
@@ -38,9 +38,9 @@
 <p>You acknowledge that you have read this Agreement and agree to all its terms and conditions. By accessing and using the Website and Services you agree to be bound by this Agreement. If you do not agree to abide by the terms of this Agreement, you are not authorized to access or use the Website and Services. This policy has been created with the help of the <a href="https://www.websitepolicies.com/terms-and-conditions-generator">terms and conditions generator</a>.</p>
 <h2 id="contacting-us">Contacting us</h2>
 <p>If you have any questions, concerns, or complaints regarding this Agreement, we encourage you to contact us using the details below:</p>
-<p><a href="&#109;&#097;&#105;&#108;&#116;&#111;&#058;c&#111;&#110;t&#97;c&#116;&#64;my&#106;o&#98;&#101;&#115;&#115;&#101;&#110;&#116;ia&#108;&#115;.&#99;&#111;m">c&#111;n&#116;&#97;c&#116;&#64;myjob&#101;s&#115;&#101;&#110;&#116;i&#97;&#108;&#115;.&#99;om</a></p>
-<p>This document was last updated on December 11, 2024
-<p class="madewith"><a href="https://www.websitepolicies.com/terms-and-conditions-generator?via=madewithbadge"><img width="200" height="25" alt="Made with WebsitePolicies terms and conditions generator" src="https://cdnapp.websitepolicies.com/widgets/policies/badge.png" srcset="https://cdnapp.websitepolicies.com/widgets/policies/badge_2x.png 2x"></a></p></p>
+<a href="mailto:contact@myjobessentials.com">contact@myjobessentials.com</a>
+<div>This document was last updated on December 11, 2024
+<p class="madewith"><a href="https://www.websitepolicies.com/terms-and-conditions-generator?via=madewithbadge"><img width="200" height="25" alt="Made with WebsitePolicies terms and conditions generator" src="https://cdnapp.websitepolicies.com/widgets/policies/badge.png" srcset="https://cdnapp.websitepolicies.com/widgets/policies/badge_2x.png 2x"></a></p></div>
     </v-card-text>
     <v-card-actions class="d-flex justify-end">
       <v-btn

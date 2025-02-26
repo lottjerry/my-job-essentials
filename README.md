@@ -1,3 +1,14 @@
+# My Job Essentials
+
+## Test Account 1 - Pre Organization Sign Up Account
+email: test@test.com
+password: password
+
+
+## Test Account 2 - Post Organization Sign Up Account which can view demo schedule
+email: testschedule@test.com
+password: password
+
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.

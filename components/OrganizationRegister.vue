@@ -300,7 +300,7 @@
       //Update User Data to FireStore
       const docRef = doc(db, collectionName, user.value.uid)
       await setDoc(docRef, {
-        ScheduleName: values.scheduleName.toUpperCase(),
+        ScheduleName: values.scheduleName.toUpperCase().trim(),
         Department: values.department,
         OrganizationID: values.organizationID,
         acceptedPrivacyPolicy: appStore.acceptPrivacyPolicy,
